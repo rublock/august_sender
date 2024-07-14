@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container card" style="align-items: center;">
+        <form class="form edit_order" style="margin: 20px 0px 20px 0px; width:80%" hx-post="" hx-target="#result" hx-swap="innerHTML">
+            {% csrf_token %}
+            <label class="form-label">Клиент:</label>
+            {% render_field edit_order_form.client %}
+            <label class="form-label">Описание:</label>
+            {% render_field edit_order_form.description|safe %}
+            {% if filename %}
+                <label class="form-label">Файл:</label>
+                {{ filename.name }}<br>
+            {% endif %}
+            <label class="form-label">Трэк №:</label>
+            {% render_field edit_order_form.track_number %}
+            <label class="form-label">Статус:</label>
+            {% render_field edit_order_form.status %}
+            <br>
+        <button type="submit" class="btn btn-primary" >Изменить</button>
+        <button class="btn btn-danger delete order_delete" hx-delete="{% url 'mainapp:delete_order' edit_order_id %}"
+                hx-confirm="Вы точно хотите удалить заказ #{{ edit_order_id }} ?">Удалить</button>
+    </form>
+     <div style="display: none;" id="result" hx-trigger="load"></div>
+</div>
+{% endblock %}
+

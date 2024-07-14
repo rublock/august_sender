@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container card">
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Клиент</th>
+            <th scope="col">Примечание</th>
+            <th scope="col">Изображение</th>
+            <th scope="col">Трэк №</th>
+            <th scope="col">Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% include "partial_order_positions_list.html" %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

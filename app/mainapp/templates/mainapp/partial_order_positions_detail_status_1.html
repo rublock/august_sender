@@ -1,0 +1,9 @@
+<tr class="table-success">
+    <th scope="row">{{ i.order_id }}</th>
+    <td>{{ i.client }}</td>
+    <td>{{ i.description|safe }}</td>
+    <td>{{ i.image }}</td>
+    <td>{{ i.track_number }}</td>
+    <td><a class="btn btn-primary" href="{% url 'mainapp:edit_order' i.id %}" aria-current="page">Изменить</a></td>
+</tr>
+

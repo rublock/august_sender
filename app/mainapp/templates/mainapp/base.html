@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}" type="text/css">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <!--HTMX-->
+    <script src="https://unpkg.com/htmx.org@1.9.7"></script>
+    <title>August Sender</title>
+</head>
+
+<body class="d-flex flex-column" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+    {% if user.is_authenticated %}
+
+      <!-- HEADER -->
+      <header class="container-fluid p-0">
+
+        <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-dark">
+          <div class="container-fluid" style="display: flex; justify-content: center; align-items: center;">
+              <ul class="navbar-nav mb-2 mb-lg-0" style="display: flex; justify-content: center; align-items: center;">
+                <li class="nav-item">
+                  <a class="navbar-brand" href="{% url 'mainapp:home_page' %}">August Sender</a>
+                </li>
+              {% if user.is_superuser %}
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'admin:index' %}">Админка</a>
+                </li>
+              {% else %}
+
+              {% endif %}
+                <li class="nav-item">
+                  <a class="btn btn-success" href="{% url 'mainapp:new_order' %}">Создать</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'mainapp:client_list' %}">Клиенты</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'mainapp:send_orders' %}">Отправленные</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active">{{ user }}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="btn btn-danger" href="{% url 'logout' %}">Выйти</a>
+                </li>
+              <li class="nav-item">
+                  <a class="nav-link"></a>
+                </li>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Поиск</button>
+                </form>
+              </ul>
+
+          </div>
+        </nav>
+
+      </header>
+
+    {% block content %}{% endblock %}
+
+    {% else %}
+    <div class="container sticky_container" style="align-items: center; width: 310px; margin-top: 10%">
+        <h2> Войдите </h2>
+        <form method="post">
+            {{ form.username }}<br>
+            {{ form.password }}
+            <div class="mb-1">Запомнить меня: {{ form.remember_me }}</div>
+            {% csrf_token %}
+            <input type="submit" class="btn btn-primary btn-lg" value="Войти">
+        </form>
+    </div>
+    {% endif %}
+
+<footer class="footer mt-auto py-3 bg-light sticky_footer">
+    <p class="text-center text-muted">© 2023 August Sender</p>
+    <p class="text-center text-muted">made by <a href="https://github.com/rublock">ruBlock</a></p>
+</footer>
+
+<script src="{% static 'js/app.js' %}"></script>
+
+</body>
+
+<style>
+
+</style>
+</html>

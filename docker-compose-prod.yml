@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: django
+    restart: always
+    build:
+      context: .
+    volumes:
+      - static-data:/vol/web
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16.2
+    container_name: postgres
+    restart: always
+    volumes:
+      - ./data/database:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+  proxy:
+    container_name: nginx
+    restart: always
+    build:
+      context: ./proxy
+    ports:
+      - 80:8000
+    volumes:
+      - static-data:/vol/static
+    depends_on:
+      - app
+
+volumes:
+  static-data:
