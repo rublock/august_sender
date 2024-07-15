@@ -31,7 +31,6 @@ class ChangeOrderForm(forms.ModelForm):
         'height': '300px'
     }
     }))
-    file = forms.FileField()
 
     class Meta:
         model = OrderPosition
