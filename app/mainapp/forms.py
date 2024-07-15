@@ -21,7 +21,6 @@ class NewOrderForm(forms.Form):
                                           'height': '300px'
                                       }
                                       }))
-    file = forms.FileField()
     track_number = forms.CharField(label="Трэк №", required=False, max_length=50)
     status = forms.ChoiceField(label="Статус", choices=CHOICES, initial=1)
 
