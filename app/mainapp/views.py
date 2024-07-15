@@ -100,7 +100,7 @@ def new_order(request):
 @login_required
 def edit_order(request, id):
     if request.method == "POST":
-        order = OrderPosition.objects.get(id__iexact=id)
+        order = OrderPosition.objects.get(id=id)
         order_change_form = ChangeOrderForm(request.POST, instance=order)
 
         if order_change_form.is_valid():
@@ -109,7 +109,7 @@ def edit_order(request, id):
         else:
             return JsonResponse({'error': 'Server error'}, status=400)
     else:
-        order = OrderPosition.objects.get(id__iexact=id)
+        order = OrderPosition.objects.get(id=id)
         edit_order_form = ChangeOrderForm(instance=order)
 
         return render(request, "order.html", {
@@ -121,7 +121,7 @@ def edit_order(request, id):
 @login_required
 def delete_order(request, id):
     if request.method == "DELETE":
-        order = get_object_or_404(OrderPosition, id__iexact=id)
+        order = get_object_or_404(OrderPosition, id=id)
         deleted_order_id = order.id
         order.delete()
         return JsonResponse({'deleted_order_id': deleted_order_id})
@@ -179,7 +179,7 @@ def client_list(request):
 @login_required
 def edit_client(request, id):
     if request.method == "POST":
-        client = Client.objects.get(id__iexact=id)
+        client = Client.objects.get(id=id)
         client_change_form = ChangeClientForm(request.POST, instance=client)
 
         if client_change_form.is_valid():
@@ -188,7 +188,7 @@ def edit_client(request, id):
         else:
             return JsonResponse({'error': 'Server error'}, status=400)
     else:
-        client = Client.objects.get(id__iexact=id)
+        client = Client.objects.get(id=id)
         edit_client_form = ChangeClientForm(instance=client)
 
         return render(request, "client.html", {
@@ -201,7 +201,7 @@ def edit_client(request, id):
 @login_required
 def delete_client(request, id):
     if request.method == "DELETE":
-        client = get_object_or_404(Client, id__iexact=id)
+        client = get_object_or_404(Client, id=id)
         deleted_client_id = client.id
         deleted_client_name = client.name
         client.delete()
