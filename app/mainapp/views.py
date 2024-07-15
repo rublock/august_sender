@@ -60,13 +60,9 @@ def new_order(request):
                         track_number=form_data['track_number'],
                     )
 
-                    uploaded_file = request.FILES['file']
-                    fs = FileSystemStorage(location=settings.MEDIA_ROOT)
-                    fs.save(uploaded_file.name, uploaded_file)
-
                     order_position.save()
 
-                    return JsonResponse({'new_order_id': order.id}) #TODO: нужно как-то передать еще и данные для шаблона c путем для файла чтобы его отобразить на странице
+                    return JsonResponse({'new_order_id': order.id})
 
             except Exception:
 
